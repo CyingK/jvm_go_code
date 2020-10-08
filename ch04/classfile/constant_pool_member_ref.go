@@ -1,7 +1,5 @@
 package classfile
 
-import "log"
-
 /*
  * member_ref 类型 tag
  */
@@ -17,8 +15,6 @@ type CONSTANT_MEMBER_REF_INFO struct {
 func (self *CONSTANT_MEMBER_REF_INFO) readInfo(reader *ClassReader) {
 	self.classIndex = reader.readUint16()
 	self.nameAndTypeIndex = reader.readUint16()
-	log.Printf("\t    (4Byte)CONSTANT_member_ref_info")
-	log.Printf("\t\t[class_index: %d], [name_and_type_index: %d]", self.classIndex, self.nameAndTypeIndex)
 }
 
 /*

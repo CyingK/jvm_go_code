@@ -1,7 +1,7 @@
 package classpath
 
 import (
-	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 )
@@ -14,7 +14,6 @@ type Classpath struct {
 
 func (self *Classpath) ReadClass(className string) ([]byte, Entry, error) {
 	className = className + ".class"
-	fmt.Println(className)
 	if data, entry, err := self.bootClasspath.readClass(className); err == nil {
 		return data, entry, err
 	}
@@ -30,6 +29,7 @@ func (self *Classpath) String() string {
 }
 
 func Parse(jreOption, cpOption string) *Classpath {
+	log.Println("解析加载器路径......")
 	cp := &Classpath{}
 	cp.parseBootAndExtClasspath(jreOption)
 	cp.parseUserClasspath(cpOption)
@@ -37,11 +37,13 @@ func Parse(jreOption, cpOption string) *Classpath {
 }
 
 func (self *Classpath) parseBootAndExtClasspath(jreOption string) {
-	jreDir := getJreDir(jreOption)
+	jreDir := GetJreDir(jreOption)
 	jreLibPath := filepath.Join(jreDir, "lib", "*")
 	self.bootClasspath = newWildcardEntry(jreLibPath)
+	log.Println("引导类加载器：", jreLibPath)
 	jreExtPath := filepath.Join(jreDir, "lib", "ext", "*")
 	self.extClasspath = newWildcardEntry(jreExtPath)
+	log.Println("扩展类加载器：", jreExtPath)
 }
 
 func (self *Classpath) parseUserClasspath(cpOption string) {
@@ -49,9 +51,10 @@ func (self *Classpath) parseUserClasspath(cpOption string) {
 		cpOption = "."
 	}
 	self.userClasspath = newEntry(cpOption)
+	log.Println("系统类加载器：", self.userClasspath.String())
 }
 
-func getJreDir(jreOption string) string {
+func GetJreDir(jreOption string) string {
 	if jreOption != "" && exists(jreOption) {
 		return jreOption
 	}

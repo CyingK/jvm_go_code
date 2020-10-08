@@ -3,7 +3,8 @@ package main
 import (
 	"fmt"
 	classpath "jvm_go_code/ch02/classpath"
-	"strconv"
+	"log"
+	//"strconv"
 	"strings"
 )
 
@@ -20,14 +21,21 @@ func main() {
 
 func startJVM(cmd *Cmd) {
 	cp := classpath.Parse(cmd.XjreOption, cmd.cpOption)
-	fmt.Printf("classpath: %s\nclass: %s\nargs: %v\n", cmd.cpOption, cmd.class, cmd.args)
+	log.Println("命令行参数......")
+	log.Println("类路径：", cmd.cpOption)
+	log.Println("待加载的类：", cmd.class)
+	log.Println("参数列表：", cmd.args)
 	className := strings.Replace(cmd.class, ".", "/", -1)
 	classData, _, err := cp.ReadClass(className)
 	if err != nil {
 		fmt.Println("ClassNotFoundException: " + className)
 		return
 	}
+	var count int64 = 0
 	for _, item := range classData {
-		fmt.Printf("%v", strconv.FormatInt(int64(item), 16))
+		fmt.Printf("%02X ", item)
+		if count++; count % 64 == 0 {
+			println()
+		}
 	}
 }

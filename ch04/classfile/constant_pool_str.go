@@ -1,7 +1,5 @@
 package classfile
 
-import "log"
-
 /*
  * string 类型 tag
  */
@@ -15,8 +13,6 @@ type CONSTANT_STRING_INFO struct {
  */
 func (self *CONSTANT_STRING_INFO) readInfo(reader *ClassReader) {
 	self.stringIndex = reader.readUint16()
-	log.Println("\t    (2Byte)CONSTANT_string_info")
-	log.Println("\t\tindex：", self.stringIndex)
 }
 
 /*

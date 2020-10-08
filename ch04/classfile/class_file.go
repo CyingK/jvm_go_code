@@ -2,7 +2,6 @@ package classfile
 
 import (
 	"fmt"
-	"log"
 )
 
 /*
@@ -61,7 +60,8 @@ func (self *ClassFile) read(reader *ClassReader) {
  * 检验魔数 0xCAFEBABE
  */
 func (self *ClassFile) readAndCheckMagic(reader *ClassReader) {
-	if self.magic = reader.readUint32(); self.magic != 0xCAFEBABE {
+	self.magic = reader.readUint32()
+	if self.magic != 0xCAFEBABE {
 		panic("java.lang.ClassFormatError: magic!")
 	}
 }

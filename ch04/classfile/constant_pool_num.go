@@ -1,7 +1,5 @@
 package classfile
 
-import "log"
-
 /*
  * integer 类型 tag
  */
@@ -15,8 +13,6 @@ type CONSTANT_INTEGER_INFO struct {
 func (self *CONSTANT_INTEGER_INFO) readInfo(reader *ClassReader) {
 	bytes := reader.readUint32()
 	self.val = int32(bytes)
-	log.Println("\t    (4Byte)CONSTANT_integer_info")
-	log.Println("\t\tvalue：", self.val)
 }
 
 /*
@@ -32,8 +28,6 @@ type CONSTANT_FLOAT_INFO struct {
 func (self *CONSTANT_FLOAT_INFO) readInfo(reader *ClassReader) {
 	bytes := reader.readUint32()
 	self.val = float32(bytes)
-	log.Println("\t    (4Byte)CONSTANT_float_info")
-	log.Println("\t\tvalue：", self.val)
 }
 
 /*
@@ -49,8 +43,6 @@ type CONSTANT_LONG_INFO struct {
 func (self *CONSTANT_LONG_INFO) readInfo(reader *ClassReader) {
 	bytes := reader.readUint64()
 	self.val = int64(bytes)
-	log.Println("\t    (8Byte)CONSTANT_long_info")
-	log.Println("\t\tvalue：", self.val)
 }
 
 /*
@@ -66,6 +58,4 @@ type CONSTANT_DOUBLE_INFO struct {
 func (self *CONSTANT_DOUBLE_INFO) readInfo(reader *ClassReader) {
 	bytes := reader.readUint64()
 	self.val = float64(bytes)
-	log.Println("\t    (8Byte)CONSTANT_double_info")
-	log.Println("\t\tvalue：", self.val)
 }

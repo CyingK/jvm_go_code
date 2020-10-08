@@ -1,7 +1,5 @@
 package classfile
 
-import "log"
-
 /*
  * name_and_type 类型 tag
  */
@@ -16,6 +14,4 @@ type CONSTANT_NAME_AND_TYPE_INFO struct {
 func (self *CONSTANT_NAME_AND_TYPE_INFO) readInfo(reader *ClassReader) {
 	self.nameIndex = reader.readUint16()
 	self.descriptorIndex = reader.readUint16()
-	log.Printf("\t    (4Byte)CONSTANT_name_and_type_info")
-	log.Printf("\t\t[name_index: %d], [descriptor_index: %d]", self.nameIndex, self.descriptorIndex)
 }

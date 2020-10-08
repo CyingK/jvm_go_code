@@ -1,7 +1,5 @@
 package classfile
 
-import "log"
-
 type MemberInfo struct {
 	constantPool    ConstantPool	// 常量池
 	accessFlags     uint16			// 访问标识
@@ -15,10 +13,8 @@ type MemberInfo struct {
  */
 func readMembers(reader *ClassReader, constantPool ConstantPool) []*MemberInfo {
 	memberCount := reader.readUint16()
-	log.Println("(2Byte)读入成员数量：", memberCount)
 	members := make([]*MemberInfo, memberCount)
 	for index := range members {
-		log.Printf("\t[%d]", index + 1)
 		members[index] = readMember(reader, constantPool)
 	}
 	return members
@@ -28,19 +24,13 @@ func readMembers(reader *ClassReader, constantPool ConstantPool) []*MemberInfo {
  * 生成一个成员
  */
 func readMember(reader *ClassReader, constantPool ConstantPool) *MemberInfo {
-	memberInfo := &MemberInfo{
+	return &MemberInfo{
 		constantPool:    constantPool,
 		accessFlags:     reader.readUint16(),
 		nameIndex:       reader.readUint16(),
 		descriptorIndex: reader.readUint16(),
-		attributes: 	 nil,
+		attributes: 	 readAttributes(reader, constantPool),
 	}
-	log.Println("\t    (2Byte)访问标识：", memberInfo.accessFlags)
-	log.Println("\t    (2Byte)名称下标：", memberInfo.nameIndex, "//", memberInfo.Name())
-	log.Println("\t    (2Byte)描述下标：", memberInfo.descriptorIndex)
-	attrbutes := readAttributes(reader, constantPool)
-	memberInfo.attributes = attrbutes
-	return memberInfo
 }
 
 /*
